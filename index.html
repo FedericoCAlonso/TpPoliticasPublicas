@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>TP: El Lobizón - IFTS 32</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Reveal.js Base -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+  
+  <!-- Tipografías: Outfit (Títulos) e Inter (Cuerpo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========================================================
+       PALETA REFINADA: CRIMSON & SLATE (Tono Documental)
+       ======================================================== */
+    :root {
+      /* MODO CLARO (Papel ahuesado y Tinta Pizarra) */
+      --bg-color: #F7F5F0;
+      --text-color: #2D3748;
+      --heading-color: #1A202C;
+      --accent-color: #9B2C2C; /* Carmesí / Rojo Sangre clásico */
+      --card-bg: #FFFFFF;
+      --card-border: #E2E8F0;
+      --timeline-line: #CBD5E0;
+    }
+
+    body.dark-mode {
+      /* MODO OSCURO (Carbón y Carmesí Brillante) */
+      --bg-color: #171923;
+      --text-color: #E2E8F0;
+      --heading-color: #F7FAFC;
+      --accent-color: #FC8181;
+      --card-bg: #2D3748;
+      --card-border: #4A5568;
+      --timeline-line: #4A5568;
+    }
+
+    .reveal-viewport {
+      background-color: var(--bg-color) !important;
+      transition: background-color 0.4s ease;
+    }
+
+    .reveal { font-family: 'Inter', sans-serif; color: var(--text-color); }
+    
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--heading-color);
+      text-transform: none;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .reveal p, .reveal li { font-size: 0.85em; line-height: 1.6; color: var(--text-color); }
+    
+    /* Resaltador suave */
+    .highlight-pill {
+      background-color: rgba(155, 44, 44, 0.15);
+      color: var(--accent-color);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    /* ========================================================
+       TARJETAS Y LAYOUT
+       ======================================================== */
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 30px;
+      text-align: left;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+      transition: all 0.3s ease;
+    }
+    
+    .card h4 { color: var(--accent-color); margin-top: 0; font-size: 1.2em; }
+
+    .grid-2 { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 30px; align-items: center; }
+    .grid-2-inv { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 30px; align-items: center; }
+
+    .img-rounded {
+      width: 100%; height: 400px; object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+    }
+    
+    .epigrafe {
+      font-size: 0.55em !important; color: #718096 !important;
+      margin-top: 8px !important; font-style: italic; text-align: center;
+    }
+
+    /* ========================================================
+       COMPONENTE: LÍNEA DE TIEMPO (TIMELINE)
+       ======================================================== */
+    .timeline {
+      position: relative; max-width: 900px; margin: 0 auto;
+      padding-left: 40px; text-align: left;
+    }
+    .timeline::before {
+      content: ''; position: absolute; left: 14px; top: 0; bottom: 0;
+      width: 3px; background: var(--timeline-line); border-radius: 2px;
+    }
+    .tl-item { position: relative; margin-bottom: 30px; }
+    .tl-item::before {
+      content: ''; position: absolute; left: -33px; top: 8px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--bg-color); border: 3px solid var(--accent-color);
+      z-index: 2;
+    }
+    .tl-year {
+      font-family: 'Outfit', sans-serif; font-weight: 800;
+      font-size: 1.3em; color: var(--accent-color); margin: 0 0 5px 0;
+    }
+    .tl-content {
+      background: var(--card-bg); padding: 15px 25px;
+      border-radius: 12px; border: 1px solid var(--card-border);
+    }
+
+    /* ========================================================
+       PORTADA (HERO) CON IMAGEN DIRECTA DE INTERNET
+       ======================================================== */
+    .hero-wrapper {
+      position: relative; height: 75vh; border-radius: 24px; overflow: hidden;
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 50px; text-align: left;
+      /* Imagen de un bosque nocturno con niebla y luna desde Unsplash */
+      background: url('./assets/images/lobizon.jpeg') center/cover;
+    }
+    .hero-overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(15,23,42,0.95) 100%);
+    }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-content h1 { color: #FFFFFF; font-size: 3.8em; margin-bottom: 5px; }
+    .hero-content p { color: #E2E8F0; font-size: 1.1em; }
+
+    /* ========================================================
+       BOTÓN DE TEMA INVISIBLE (MINIMALISTA)
+       ======================================================== */
+    #theme-btn {
+      position: fixed; bottom: 20px; left: 20px; z-index: 9999;
+      background: transparent; border: none; font-size: 24px;
+      cursor: pointer; opacity: 0.3; transition: opacity 0.2s, transform 0.2s;
+    }
+    #theme-btn:hover { opacity: 1; transform: scale(1.1); }
+  </style>
+</head>
+<body>
+
+  <!-- Botón sutil de Tema (Solo el icono) -->
+  <button id="theme-btn" onclick="document.body.classList.toggle('dark-mode')" title="Alternar tema (T)">🌗</button>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ==================== PORTADA ==================== -->
+      <section data-transition="zoom">
+        <div class="hero-wrapper">
+          <div class="hero-overlay"></div>
+          <div class="hero-content">
+            <span class="highlight-pill" style="color: #fff; background: var(--accent-color); font-size: 0.6em; text-transform: uppercase;">IFTS 32 • Políticas Públicas</span>
+            <h1>El Lobizón</h1>
+            <p>De la superstición rural a la Ley 20.843 de Padrinazgo Presidencial.</p>
+            <div style="margin-top: 25px; font-size: 0.7em; color: #A0AEC0;">
+              Prof. Silvia De Angelo<br>Federico Alonso
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== PUNTO 1: IDENTIFICACIÓN ==================== -->
+      <section data-transition="fade">
+        <h2 style="text-align: left; font-size: 1.4em; color: var(--accent-color);">1. Identificación y Análisis (T. Lowi)</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h4>Ley 20.843 (1974)</h4>
+            <p>Consagra el Padrinazgo Presidencial para el 7° hijo/a de una prole del mismo sexo, transformando un "gesto simbólico" en una <span class="highlight-pill">beca vitalicia de estudios</span>.</p>
+            
+            <hr style="border-color: var(--card-border); margin: 20px 0;">
+            
+            <h4 style="margin-top: 10px;">Tipología de Lowi</h4>
+            <ul style="margin: 0; padding-left: 20px;">
+              <li><strong>Simbólica/Constituyente:</strong> Uso del prestigio de la máxima autoridad estatal.</li>
+              <li><strong>Distributiva:</strong> Asignación directa de bienes en <em>arenas pacíficas</em>.</li>
+            </ul>
+          </div>
+          <div>
+            <img class="img-rounded" src="https://media.lmcipolletti.com/p/92a972fabeaf17675ea69d4af85f33b5/adjuntos/198/imagenes/007/493/0007493759/770x0/smart/imagepng.png" alt="Medalla oficial">
+            <p class="epigrafe">Medalla oficial acuñada por Casa de Moneda Argentina.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== PUNTO 2: EL PROBLEMA (CON FOTO HISTÓRICA) ==================== -->
+      <section data-transition="slide">
+        <h2 style="text-align: left; font-size: 1.4em; color: var(--accent-color);">2. La Raíz del Problema Social</h2>
+        <div class="grid-2-inv">
+          <div>
+            <img class="img-rounded" src="https://fotos.perfil.com/2026/01/15/trim/900/900/cultura-popular-2170088.jpg" alt="Mito del lobizón">
+            <p class="epigrafe">Representación del mito (Diario Perfil).</p>
+          </div>
+          <div class="card">
+            <p>El problema que atrae al Estado <strong>no es un monstruo</strong>, sino la reacción humana frente al miedo colectivo.</p>
+            <ul style="margin-top: 15px;">
+              <li class="fragment"><strong>Choque Cultural:</strong> El mito <em>Guaraní</em> (Luisón) se potenció con la llegada de inmigrantes europeos que traían su propia versión del hombre lobo.</li>
+              <li class="fragment"><strong>Consecuencia sociológica:</strong> Aislamiento de la familia.</li>
+              <li class="fragment"><span class="highlight-pill">Impacto material:</span> Altísimo riesgo de abandono infantil, segregación o filicidio en comunidades rurales cerradas.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== PUNTO 4: EVOLUCIÓN NORMATIVA (TIMELINE) ==================== -->
+      <section data-transition="slide">
+        <h2 style="text-align: left; font-size: 1.4em; color: var(--accent-color);">3. Evolución Normativa (1907 - 2009)</h2>
+        
+        <div class="timeline">
+          <!-- Hito 1: 1907 -->
+          <div class="tl-item fragment">
+            <div class="tl-year">1907</div>
+            <div class="tl-content">
+              <strong>El origen (Generación del 80):</strong> La familia rusa Brost (alemanes del Volga) pide al Pte. Figueroa Alcorta el padrinazgo, importando la "protección del Zar". El Estado acepta, pero <span class="highlight-pill">seculariza</span> el acto como un homenaje a la fecundidad inmigrante ("Gobernar es poblar").
+            </div>
+          </div>
+          
+          <!-- Hito 2: 1973-1974 -->
+          <div class="tl-item fragment">
+            <div class="tl-year">1973 - 1974</div>
+            <div class="tl-content">
+              <strong>Institucionalización (Peronismo):</strong> El Decreto 848/73 oficializa la costumbre e <strong>incluye a la mujer</strong> (perseguida por mito de brujería). En 1974, la Ley 20.843 le suma protección económica real: <strong>la beca escolar</strong>.
+            </div>
+          </div>
+
+          <!-- Hito 3: 2009 -->
+          <div class="tl-item fragment">
+            <div class="tl-year">2009</div>
+            <div class="tl-content">
+              <strong>Derechos Civiles:</strong> El Decreto 1416/09 elimina requisitos conservadores, habilitando uniones convivenciales y ritos laicos o de credos no católicos.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== FOTO CONTEXTO: INMIGRANTES ==================== -->
+      <section data-transition="fade">
+        <h2 style="text-align: left; font-size: 1.4em; color: var(--accent-color);">Contexto: La demanda inmigrante</h2>
+        <div class="grid-2">
+          <div class="card">
+            <p>La política pública fue la respuesta del Estado a una demanda directa de colonos extranjeros en el marco del modelo agroexportador.</p>
+            <p style="margin-top: 15px;">Al recepcionar la costumbre de la Rusia Zarista, la burocracia estatal argentina realizó una <strong>traducción institucional</strong>: eliminó la religión y la magia, y la convirtió en un mecanismo de integración nacional.</p>
+          </div>
+          <div>
+            <img class="img-rounded" src="https://belengache.net/caramelosdevioletas/wp-content/uploads/Emigrantes-bajando-barco-Argentina.jpg" alt="Inmigrantes en Argentina">
+            <p class="epigrafe">Inmigrantes descendiendo en el puerto de Buenos Aires (Archivo Histórico).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== PUNTO 6: EL ROL DEL ESTADO (CORE) ==================== -->
+      <section data-transition="convex">
+        <h2 style="text-align: center; color: var(--accent-color); margin-bottom: 5px;">El Rol del Estado</h2>
+        <p style="text-align: center; color: #718096; margin-bottom: 30px;">Reflexión sobre las Unidades I y II</p>
+        
+        <div style="display: flex; flex-direction: column; gap: 20px; max-width: 900px; margin: 0 auto;">
+          
+          <div class="card fragment">
+            <h4 style="margin-bottom: 8px;">Unidad I: Prudencia y subordinación técnica</h4>
+            <p style="margin:0;">El Estado no prohibió la superstición mediante represión. Operó con <strong>prudencia</strong>, subordinando la técnica administrativa a un imperativo ético: salvar la vida del niño. Sustituyó el miedo por prestigio cívico.</p>
+          </div>
+          
+          <div class="card fragment">
+            <h4 style="margin-bottom: 8px;">Unidad II: Ruptura del Dogma y la Ciencia</h4>
+            <p style="margin:0;">Frente al <strong>Dogma</strong> (maldición) validado por el <strong>Sentido Común</strong> (abandono rural), la Ley operó con brillantez: al obligar al ahijado a cobrar una beca de estudios, lo fuerza a insertarse en el sistema escolar, logrando la <span class="highlight-pill">democratización del conocimiento</span> científico.</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== CIERRE ==================== -->
+      <section data-transition="fade">
+        <h1 style="font-size: 3.5em;">Muchas Gracias</h1>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: false,
+      center: true, 
+      transition: 'slide',
+    });
+
+    // Atajo de teclado: 'T' cambia el tema
+    document.addEventListener('keydown', (e) => {
+      if (e.key.toLowerCase() === 't' && !e.ctrlKey && !e.altKey) {
+        document.body.classList.toggle('dark-mode');
+      }
+    });
+  </script>
+</body>
+</html>

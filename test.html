@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Test Reveal.js</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Usamos CDNJS en lugar de jsDelivr -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/blood.min.css">
+</head>
+<body>
+
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <h1>¡Funciona!</h1>
+        <p>Si ves esto, el CDN anterior o el plugin estaban frenando el renderizado de JS.</p>
+      </section>
+      <section>
+        <h2>Siguiente slide</h2>
+        <p>Apretá la flecha derecha.</p>
+      </section>
+    </div>
+  </div>
+
+  <!-- Script base desde CDNJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+  
+  <script>
+    // Inicialización a prueba de fallos (sin plugins por ahora)
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      transition: 'slide'
+    }).then(() => {
+      console.log("Reveal.js inflado correctamente.");
+    }).catch(err => {
+      console.error("Error al inicializar:", err);
+    });
+  </script>
+</body>
+</html>
